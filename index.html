@@ -1,41 +1,26 @@
 <!DOCTYPE html>
   <script>
+    // Generate a random rock-paper-scissors string () -> String
     function computerPlay() {
       const options = ["rock", "paper", "scissors"];
       const index = Math.floor(Math.random() * options.length);
       return options[index];
     }
 
-    function logWin(playerSelection, computerSelection) {
-      console.log(`You win! ${playerSelection} beats ${computerSelection}.`);
-    }
-
-    function logLoss(playerSelection, computerSelection) {
-      console.log(`You lose... ${computerSelection} beats ${playerSelection}.`);
-    }
-
-    function logTie(playerSelection) {
-      console.log(`It's a tie. Computer also played ${playerSelection}.`);
-    }
-
-    function logResult(result) {
-      console.log(`Your final score is ${result}.`);
-
+    // Play a single round. (String, String) -> Int
     function playRound(playerSelection, computerSelection) {
       const rules = {rock:"scissors", paper:"rock", scissors:"paper"}
       const safePlayerSelection = playerSelection.toLowerCase();
       if (safePlayerSelection === computerSelection) {
-        logTie(playerSelection);
         return 0;
       } else if (rules[safePlayerSelection] == computerSelection) {
-        logWin(playerSelection, computerSelection);
         return 1;
       } else {
-        logLoss(playerSelection, computerSelection);
         return -1;
       }
     } 
 
+    // Play a number of games and log the outcomes. () -> ()
     function game() {
       const numberOfGames = 5;
       let score = 0;
@@ -45,6 +30,6 @@
         computerSelection = computerPlay();
         score += playRound(playerSelection, computerSelection);
       }
-      logResult(score);
+      console.log(result);
     }
   </script>
