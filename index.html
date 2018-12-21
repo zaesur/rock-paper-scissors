@@ -23,6 +23,7 @@
     function isValid(selection) {
       const validOptions = ["rock", "paper", "scissors"];
       return validOptions.includes(selection);
+    }
 
     // Play a number of rounds and log the outcome. () -> ()
     function game() {
@@ -32,10 +33,10 @@
       for (i = 0; i < numberOfGames; i++) {
         do {
           playerSelection = prompt();
-        } while ! isValid(playerSelection);
+        } while (! isValid(playerSelection));
         computerSelection = computerPlay();
         score += playRound(playerSelection, computerSelection);
       }
-      console.log(result);
+      console.log(score);
     }
   </script>
