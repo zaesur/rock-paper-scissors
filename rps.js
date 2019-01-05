@@ -5,7 +5,11 @@ let playerScore = 0;
 let computerScore = 0;
 let gamesPlayed = 0;
 const maxGames = 5;
-const rules = {rock:"scissors", paper:"rock", scissors:"paper"};
+const rules = {
+  rock: "scissors",
+  paper: "rock",
+  scissors: "paper"
+};
 
 // Generate a random rock-paper-scissors string
 function computerPlay() {
@@ -18,9 +22,8 @@ function computerPlay() {
 function playRound(e) {
   const playerSelection = e.target.name;
   const computerSelection = computerPlay();
-  const rules = {rock:"scissors", paper:"rock", scissors:"paper"};
-  if (gamesPlayed < 5) {
-    gamesPlayed += 1
+  if (gamesPlayed < maxGames) {
+    gamesPlayed += 1;
     if (rules[playerSelection] === computerSelection) playerScore += 1;
     else if (rules[computerSelection] === playerSelection) computerScore += 1;
 
@@ -30,7 +33,7 @@ function playRound(e) {
 }
 
 function updateResult(playerSelection, computerSelection) {
-  const resultBox = document.querySelector('#result')
+  const resultBox = document.querySelector('#result');
   resultBox.textContent = `You played ${playerSelection}, Computer played ${computerSelection}`;
 }
 
