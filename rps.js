@@ -1,39 +1,40 @@
-// Generate a random rock-paper-scissors string. () -> String
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => button.addEventListener('click', playRound));
+
+let playerScore = 0;
+let computerScore = 0;
+let gamesPlayed = 0;
+const maxGames = 5;
+const rules = {rock:"scissors", paper:"rock", scissors:"paper"};
+
+// Generate a random rock-paper-scissors string
 function computerPlay() {
   const options = ["rock", "paper", "scissors"];
   const index = Math.floor(Math.random() * options.length);
   return options[index];
 }
 
-// Play a single round. (String, String) -> Int
-function playRound(playerSelection, computerSelection) {
-  const rules = {rock:"scissors", paper:"rock", scissors:"paper"}
-  const safePlayerSelection = playerSelection.toLowerCase();
-  if (safePlayerSelection === computerSelection)
-    return 0;
-  else if (rules[safePlayerSelection] === computerSelection)
-    return 1;
-  else if (rules[computerSelection] === safePlayerSelection)
-    return -1;
-} 
+// Play a single round when key event occurs
+function playRound(e) {
+  const playerSelection = e.target.name;
+  const computerSelection = computerPlay();
+  const rules = {rock:"scissors", paper:"rock", scissors:"paper"};
+  if (gamesPlayed < 5) {
+    gamesPlayed += 1
+    if (rules[playerSelection] === computerSelection) playerScore += 1;
+    else if (rules[computerSelection] === playerSelection) computerScore += 1;
 
-// Check for valid input. String -> Boolean
-function isValid(selection) {
-  const validOptions = ["rock", "paper", "scissors"];
-  return validOptions.includes(selection);
+    updateResult(playerSelection, computerSelection);
+    updateScore();
+  }
 }
 
-// Play a number of rounds and log the outcome. () -> ()
-function game() {
-  const numberOfGames = 5;
-  let score = 0;
-  let playerSelection;
-  for (i = 0; i < numberOfGames; i++) {
-    do {
-      playerSelection = prompt();
-    } while (! isValid(playerSelection));
-    computerSelection = computerPlay();
-    score += playRound(playerSelection, computerSelection);
-  }
-  console.log(score);
+function updateResult(playerSelection, computerSelection) {
+  const resultBox = document.querySelector('#result')
+  resultBox.textContent = `You played ${playerSelection}, Computer played ${computerSelection}`;
+}
+
+function updateScore() {
+  const scoreBox = document.querySelector('#score');
+  scoreBox.textContent = `Round: ${gamesPlayed} You: ${playerScore} Computer: ${computerScore}`;
 }
