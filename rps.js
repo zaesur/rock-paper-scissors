@@ -1,15 +1,36 @@
-const buttons = document.querySelectorAll('button');
-buttons.forEach(button => button.addEventListener('click', playRound));
+class GameState {
+  constructor(round, player, computer) {
+    this.round = round;
+    this.player = player;
+    this.computer = computer;
+    this.max = 5;
+  }
 
-let playerScore = 0;
-let computerScore = 0;
-let gamesPlayed = 0;
-const maxGames = 5;
-const rules = {
-  rock: "scissors",
-  paper: "rock",
-  scissors: "paper"
-};
+  playRound(playerOne, playerTwo) {
+    const rules = {
+      rock: "scissors",
+      scissors: "paper",
+      paper: "rock"
+    };
+    if (this.round > this.max) {
+      return this;
+    } else if (rules[playerOne] === playerTwo) {
+      return new GameState(this.round + 1, this.player + 1, this.computer);
+    } else if (rules[playerTwo] === playerOne) {
+      return new GameState(this.round + 1, this.player, this.computer + 1);
+    } else {
+      return new GameState(this.round + 1, this.player, this.computer)
+    }
+  }
+
+  get text() {
+    if (this.round > this.max) {
+      return this.player > this.computer ? "You won!" : this.player = this.computer ? "You tied." : "You lost.";
+    } else {
+      return `Round: ${this.round}, You: ${this.player}, Computer: ${this.computer}`;
+    }
+  } 
+}
 
 // Generate a random rock-paper-scissors string
 function computerPlay() {
@@ -18,26 +39,15 @@ function computerPlay() {
   return options[index];
 }
 
-// Play a single round when key event occurs
-function playRound(e) {
-  const playerSelection = e.target.name;
-  const computerSelection = computerPlay();
-  if (gamesPlayed < maxGames) {
-    gamesPlayed += 1;
-    if (rules[playerSelection] === computerSelection) playerScore += 1;
-    else if (rules[computerSelection] === playerSelection) computerScore += 1;
-
-    updateResult(playerSelection, computerSelection);
-    updateScore();
-  }
+function render(state) {
+  document.querySelector('.score').textContent = state.text;
 }
 
-function updateResult(playerSelection, computerSelection) {
-  const resultBox = document.querySelector('#result');
-  resultBox.textContent = `You played ${playerSelection}, Computer played ${computerSelection}`;
-}
+let game = new GameState(1, 0, 0);
 
-function updateScore() {
-  const scoreBox = document.querySelector('#score');
-  scoreBox.textContent = `Round: ${gamesPlayed} You: ${playerScore} Computer: ${computerScore}`;
-}
+document.querySelectorAll('button').forEach(button => {
+  button.addEventListener("click", event => {
+    game = game.playRound(event.target.name, computerPlay());
+    render(game);
+  });
+});

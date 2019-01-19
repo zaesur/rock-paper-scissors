@@ -1,3 +1,48 @@
 * {
-  text-align: center;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    --main-bg-color: #2c3e50;
+    --light-digit-color: #ecf0f1;
+    --dark-digit-color: #bdc3c7;
+    --light-op-color: #95a5a6;
+    --dark-op-color: #7f8c8d;
+    --light-eq-color: #e74c3c;
+    --dark-eq-color: #c0392b;
+}
+  
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-bg-color);
+    height: 100vh;
+}
+
+.game {
+    display: grid;
+    background-color: var(--light-op-color);
+    border-radius: 5px;
+    padding: 5px;
+    overflow: hidden;
+
+}
+
+.score {
+    span: 3;
+    text-align: center;
+    padding: 20px;
+}
+
+button {
+    padding: 1em 2em;
+    background: none;
+	cursor: pointer;
+    outline: inherit;
+    border; none;
+    background-color: var(--light-eq-color);
+}
+
+button:hover {
+    background-color: var(--dark-eq-color);
 }
