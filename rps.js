@@ -25,7 +25,7 @@ class GameState {
 
   get text() {
     if (this.round > this.max) {
-      return this.player > this.computer ? "You won!" : this.player = this.computer ? "You tied." : "You lost.";
+      return this.player > this.computer ? "You've won!" : this.player === this.computer ? "You've tied." : "You've lost.";
     } else {
       return `Round: ${this.round}, You: ${this.player}, Computer: ${this.computer}`;
     }
